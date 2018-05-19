@@ -1,5 +1,6 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -210,7 +211,7 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {//use regexpal
+	public String cleanPhoneNumber(String string) {
 		StringBuilder finalNum = new StringBuilder();	
 		for(String number: string.split("\\s|\\-|\\(|\\s|\\)|\\."))
 		{
@@ -219,6 +220,8 @@ public class EvaluationService {
 
 		if(finalNum.toString().length() > 11)
 		{
+			throw new IllegalArgumentException();
+		}else if(finalNum.toString().matches("\\D+")) {
 			throw new IllegalArgumentException();
 		}
 
@@ -235,7 +238,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
@@ -313,10 +316,25 @@ public class EvaluationService {
 	 * 
 	 * @param string
 	 * @return
-	 */
+	 */	
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		StringBuilder str = new StringBuilder();
+		char ch = string.charAt(0);
+		switch (ch) {
+		case 'a': str.append(string);str.append("ay"); break;
+		case 'e': str.append(string);str.append("ay"); break;
+		case 'i': str.append(string);str.append("ay"); break;
+		case 'o': str.append(string);str.append("ay"); break;
+		case 'u': str.append(string);str.append("ay"); break;
+		case 'y': 
+			str.append(string);
+			str.replace(0, 1, "");
+			str.append('y');
+			str.append("ay"); 
+			break;	
+		default:break;
+		}
+		return str.toString();
 	}
 
 	/**
@@ -500,8 +518,56 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			StringBuilder str = new StringBuilder();
+			char[] charArray = string.toLowerCase().toCharArray();
+			
+			for(int i=0;i < charArray.length;i++) {
+				char c = charArray[i];
+//				if(str.length()%6==0) { 
+//					str.append(' ');
+//				}
+				switch (c) {
+				case 'a':str.append('z');break;	
+				case 'b':str.append('y');break;
+				case 'c':str.append('x');break;
+				case 'd':str.append('w');break;
+				case 'e':str.append('v');break;
+				case 'f':str.append('u');break;
+				case 'g':str.append('t');break;
+				case 'h':str.append('s');break;
+				case 'i':str.append('r');break;
+				case 'j':str.append('q');break;
+				case 'k':str.append('p');break;
+				case 'l':str.append('o');break;
+				case 'm':str.append('n');break;
+				case 'n':str.append('m');break;
+				case 'o':str.append('l');break;
+				case 'p':str.append('k');break;
+				case 'q':str.append('j');break;
+				case 'r':str.append('i');break;
+				case 's':str.append('h');break;
+				case 't':str.append('g');break;
+				case 'u':str.append('f');break;
+				case 'v':str.append('e');break;
+				case 'w':str.append('d');break;
+				case 'x':str.append('c');break;
+				case 'y':str.append('b');break;
+				case 'z':str.append('a');break;
+				case '0':str.append('0');break;
+				case '1':str.append('1');break;
+				case '2':str.append('2');break;
+				case '3':str.append('3');break;
+				case '4':str.append('4');break;
+				case '5':str.append('5');break;
+				case '6':str.append('6');break;
+				case '7':str.append('7');break;
+				case '8':str.append('8');break;
+				case '9':str.append('9');break;
+				default:break;
+				}
+			}
+
+			return str.toString();		
 		}
 
 		/**
@@ -511,8 +577,53 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			StringBuilder str = new StringBuilder();
+			char[] charArray = string.toLowerCase().toCharArray();
+			
+			for(int i=0;i < charArray.length;i++) {
+				char c = charArray[i];
+				switch (c) {
+				case 'a':str.append('z');break;	
+				case 'b':str.append('y');break;
+				case 'c':str.append('x');break;
+				case 'd':str.append('w');break;
+				case 'e':str.append('v');break;
+				case 'f':str.append('u');break;
+				case 'g':str.append('t');break;
+				case 'h':str.append('s');break;
+				case 'i':str.append('r');break;
+				case 'j':str.append('q');break;
+				case 'k':str.append('p');break;
+				case 'l':str.append('o');break;
+				case 'm':str.append('n');break;
+				case 'n':str.append('m');break;
+				case 'o':str.append('l');break;
+				case 'p':str.append('k');break;
+				case 'q':str.append('j');break;
+				case 'r':str.append('i');break;
+				case 's':str.append('h');break;
+				case 't':str.append('g');break;
+				case 'u':str.append('f');break;
+				case 'v':str.append('e');break;
+				case 'w':str.append('d');break;
+				case 'x':str.append('c');break;
+				case 'y':str.append('b');break;
+				case 'z':str.append('a');break;
+				case '0':str.append('0');break;
+				case '1':str.append('1');break;
+				case '2':str.append('2');break;
+				case '3':str.append('3');break;
+				case '4':str.append('4');break;
+				case '5':str.append('5');break;
+				case '6':str.append('6');break;
+				case '7':str.append('7');break;
+				case '8':str.append('8');break;
+				case '9':str.append('9');break;
+				default:break;
+				}
+			}
+
+			return str.toString();
 		}
 	}
 
@@ -639,7 +750,8 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		
+		LocalDateTime ldt = LocalDateTime.now();
+
 		return null;
 	}
 
@@ -729,7 +841,6 @@ public class EvaluationService {
 			return false;
 		}else {
 			string = string.replaceAll("[^0-9]", "");
-			System.out.println(string);
 			char[] charArray = string.toCharArray();
 			int[] numArray = new int[charArray.length];
 			for(int i=(charArray.length-2);i >= 0 ;i--,i--) {
