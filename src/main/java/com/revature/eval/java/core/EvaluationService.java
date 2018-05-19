@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EvaluationService {
 
@@ -552,7 +554,7 @@ public class EvaluationService {
 				if(c == 'A'|| c == 'B'|| c == 'C'|| c == 'D'|| c == 'E'|| c == 'F'|| c == 'G'|| c == 'H'|| c == 'I'|| c == 'J'|| c == 'K' ||c == 'L'|| c == 'M'||
 						 c == 'N'|| c == 'O'|| c == 'P'|| c == 'Q'|| c == 'R'|| c == 'S'|| c == 'T'|| c == 'U'|| c == 'V'|| c == 'W'|| c == 'Y'|| c == 'Z')
 				{
-					break;
+					return false;
 				}else 
 				{
 					temp = Character.getNumericValue(charArray[i]);	
@@ -719,9 +721,40 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-	
-		return false;
+		int sum=0;
+		if(string.contains("-")) {
+			return false;
+		}else if(string.matches("\\D")) {
+			System.out.println("has nonnumeric, fals");
+			return false;
+		}else {
+			string = string.replaceAll("[^0-9]", "");
+			System.out.println(string);
+			char[] charArray = string.toCharArray();
+			int[] numArray = new int[charArray.length];
+			for(int i=(charArray.length-2);i >= 0 ;i--,i--) {
+				int temp = Character.getNumericValue(charArray[i]);
+				temp = 2*temp;	
+				if(temp>9) {
+					temp = temp-9;
+				}
+				numArray[i]=temp;
+			}
+			for(int i=(charArray.length-1);i >= 0 ;i--,i--) {
+				int temp = Character.getNumericValue(charArray[i]);
+				numArray[i]=temp;
+			}
+			for(int i=0;i <numArray.length ;i++) {
+				sum += numArray[i];
+			}
+			if(sum%10==0) {
+				return true;
+			}else {
+				return false;
+			}
+		}
 	}
+	
 
 	/**
 	 * 20. Parse and evaluate simple math word problems returning the answer as an
@@ -751,25 +784,48 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
+		int add=0,sub=0,mult=0,div=0;
 		if(string.matches(".*plus.*")) {
-			
+			add=1;
 		}else if(string.matches(".*minus.*")) {
-			
+			sub=1;
 		}else if (string.matches(".*multiplied.*")) {
-			
+			mult=1;
 		}else if(string.matches(".*divided.*")) {
-			
+			div=1;
 		}
+			
 		String newString = string.replaceAll("[^-0-9]+", " ").trim();
 		String[] parts = newString.split("\\s");
 		String part1 = parts[0];
 		String part2 = parts[1];
 		int a = Integer.parseInt(part1);
 		int b = Integer.parseInt(part2);
-		System.out.println(part1);
+		
+		if(add==1) {
+			return addition(a,b);
+		}else if(sub==1) {
+			return subtraction(a,b);
+		}else if (mult==1) {
+			return multiplication(a,b);
+		}else if(div==1) {
+			return division(a,b);
+		}else {
+			return 0;
+		}
 	}
 	
-	public static int addition(int a, int b) {
-		return a + b;
+	public int addition(int c, int d) {
+		return c + d;
 	}
+	public int subtraction(int c, int d) {
+		return c - d;
+	}
+	public int multiplication(int c, int d) {
+		return c * d;
+	}
+	public int division(int c, int d) {
+		return c / d;
+	}
+
 }
